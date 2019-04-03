@@ -1,15 +1,16 @@
 package Acng;
 
 public class MakeKey {
-    private LinkedList deck;
-    private LinkedList pt1;
-    private LinkedList pt2;
-    private LinkedList pt3;
-    private ListNode jokerADemo;
-    private ListNode jokerBDemo;
-    private int key;
+    private LinkedList deck;//the deck
+    private LinkedList pt1;//save point 1 for cutting the deck part one
+    private LinkedList pt2;//save point 2 for cutting the deck part two
+    private LinkedList pt3;//save point 3 for cutting the deck part three
+    private ListNode jokerADemo;//just for set the position for joker A 27
+    private ListNode jokerBDemo;//just for set the position for joker B 28
+    private int key;//The keystream value
 
     public MakeKey(LinkedList deck) {
+        //initialize
         this.deck = deck;
         pt1 = new LinkedList();
         pt2 = new LinkedList();
@@ -19,13 +20,14 @@ public class MakeKey {
     }
 
     public LinkedList processAndPrint() {
+        //Showing the steps
         deck.Blackflap27(jokerADemo);
         System.out.println("S1: " + deck);
         deck.Blackflap28(jokerBDemo);
         System.out.println("S2: " + deck);
-        firstShafu();
+        tripleCut();
         System.out.println("S3: " + deck);
-        secondShafu();
+        countCut();
         System.out.println("S4: " + deck);
         Key();
         if (isskip())
@@ -33,31 +35,34 @@ public class MakeKey {
         return pt3;
     }
     public LinkedList process() {
+        //Just do the process at background
         deck.Blackflap27(jokerADemo);
         deck.Blackflap28(jokerBDemo);
-        firstShafu();
-        secondShafu();
+        tripleCut();
+        countCut();
         Key();
         return pt3;
     }
     private void cut() {
+        //Cut the deck to three part
         ListNode current = deck.getHead();
-        while (!isJoker(current)) { //build first part
+        while (!isJoker(current)) {//cut first part
             pt1.addToTail(current.data);
             current = current.next;
         }
-        pt2.addToTail(current.data);    //add first joker
+        pt2.addToTail(current.data);//add first joker
         current = current.next;
-        while (!isJoker(current)) {
+        while (!isJoker(current)) {//cut the second part
             pt2.addToTail(current.data);
             current = current.next;
         }
-        pt2.addToTail(current.data);    //add next joker
-        for (current = current.next; current != null; current = current.next)
+        pt2.addToTail(current.data);//add next joker
+        for (current = current.next; current != null; current = current.next)//the remaining part to part three
             pt3.addToTail(current.data);
     }
 
-    private void firstShafu() {
+    private void tripleCut() {
+        //Perform a triple cut
         cut();
         if (!isJoker(deck.getHead())) {
             pt2.addNodeToTail(pt1.getHead());//tail.next = head.head;
@@ -73,7 +78,8 @@ public class MakeKey {
         deck = pt3;
     }
 
-    private void secondShafu() {
+    private void countCut() {
+        //Perform a count cut
         ListNode current = deck.getHead();
         ListNode deckTail = deck.getTail();
         int num = (int) deck.getTail().data;
@@ -95,6 +101,7 @@ public class MakeKey {
 
 
     public int Key() {
+        //find the key stream value
         ListNode current = deck.getHead();
         int top = (int) pt3.getHead().data;
         if (top == 27 || top == 28)
@@ -106,16 +113,17 @@ public class MakeKey {
     }
 
     public boolean isskip() {
-        if (key == 27 || key == 28) {
-            return true;
-        }return false;
+        //Check  (N+1)-th card is a joker
+        return key == 27 || key == 28;
     }
 
     public int getKey() {
+        //provide the key
         return key;
     }
 
     public boolean isJoker(ListNode node) {
+        //check the card is a joker
         return ((int) node.data == 27 || (int) node.data == 28);
     }
 }
