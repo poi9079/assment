@@ -1,5 +1,3 @@
-package Acng;
-
 public class CardDuplicateException extends RuntimeException {
     public CardDuplicateException(){
         // To print card duplicate exception prompt

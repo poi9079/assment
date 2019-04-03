@@ -1,12 +1,8 @@
-package Acng;
-
 public class MakeKey {
     private LinkedList deck;//the deck
     private LinkedList pt1;//save point 1 for cutting the deck part one
     private LinkedList pt2;//save point 2 for cutting the deck part two
     private LinkedList pt3;//save point 3 for cutting the deck part three
-    private ListNode jokerADemo;//just for set the position for joker A 27
-    private ListNode jokerBDemo;//just for set the position for joker B 28
     private int key;//The keystream value
 
     public MakeKey(LinkedList deck) {
@@ -15,15 +11,14 @@ public class MakeKey {
         pt1 = new LinkedList();
         pt2 = new LinkedList();
         pt3 = new LinkedList();
-        jokerADemo = deck.findJokerA();
-        jokerBDemo = deck.findJokerB();
+
     }
 
     public LinkedList processAndPrint() {
         //Showing the steps
-        deck.Blackflap27(jokerADemo);
+        deck.Blackflap27(deck.findJokerA());
         System.out.println("S1: " + deck);
-        deck.Blackflap28(jokerBDemo);
+        deck.Blackflap28(deck.findJokerB());
         System.out.println("S2: " + deck);
         tripleCut();
         System.out.println("S3: " + deck);
@@ -36,8 +31,8 @@ public class MakeKey {
     }
     public LinkedList process() {
         //Just do the process at background
-        deck.Blackflap27(jokerADemo);
-        deck.Blackflap28(jokerBDemo);
+        deck.Blackflap27(deck.findJokerA());
+        deck.Blackflap28(deck.findJokerB());
         tripleCut();
         countCut();
         Key();

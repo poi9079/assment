@@ -1,5 +1,3 @@
-package Acng;
-
 public class ListNode {
 	public Object data;   // set to public for implementation convenience
 	public ListNode next;

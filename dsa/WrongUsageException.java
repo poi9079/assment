@@ -1,5 +1,3 @@
-package Acng;
-
 public class WrongUsageException extends RuntimeException {
     public WrongUsageException() {
         // To print wrong usage prompt

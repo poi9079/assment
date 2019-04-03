@@ -1,5 +1,3 @@
-package Acng;
-
 public class Crypter {
     public static LinkedList modifyMessage(String text) {
         // Take the string reformat the message case and output as linkedlist
